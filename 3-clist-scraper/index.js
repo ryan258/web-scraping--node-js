@@ -1,5 +1,12 @@
+require('dotenv').config()
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
+const mongoose = require('mongoose')
+
+async function connectToMongoDB() {
+  await mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@craigslistjobs.axqe7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
+  console.log('successfully connected to db!')
+}
 
 async function scrapeListings(page) {
   // const browser = await puppeteer.launch({
@@ -76,6 +83,7 @@ async function sleep(milliseconds) {
 }
 
 async function main() {
+  await connectToMongoDB()
   const browser = await puppeteer.launch({ headless: false })
   // open a new page/tab
   const page = await browser.newPage()
