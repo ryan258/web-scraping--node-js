@@ -15,3 +15,6 @@ we can...
 ## Finding details through dev tools
 
 - F12 - shortkey for chrome dev tools
+- find the identifiers and test out some initial script
+  - then paste that simple script over to the IDE to flesh things out
+- do the writes in the IDE, then paste over in browser to see how it works, it's faster than using chromium each time

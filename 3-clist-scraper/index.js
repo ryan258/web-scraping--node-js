@@ -13,9 +13,23 @@ async function main() {
   // pass in site html to cheerio for parsing
   const $ = cheerio.load(html)
   // grab the query we made in the browser
-  $('.result-title').each((index, element) => console.log($(element).text()))
+  /*$('.result-title').each((index, element) => console.log($(element).text()))
   // grab the url
   $('.result-title').each((index, element) => console.log($(element).attr('href')))
+  */
+  // do the writes in the IDE, then paste over in browser to see how it works, it's faster than using chromium each time
+  //! mash the two queries above into 1 and loop
+  //! get an array of our objects
+  const results = $('.result-title')
+    .map((index, element) => {
+      const title = $(element).text()
+      const url = $(element).attr('href')
+      return { title, url }
+    })
+    .get()
+  //!^^^ make sure to use a .get() when you map over a cheerio w/ nodeJS --- then you'll get the actual values of the array!
+  console.log(results)
+  // quick way to test is to copy and paste into the dev console
 }
 
 main()
