@@ -20,11 +20,28 @@ async function main() {
   // do the writes in the IDE, then paste over in browser to see how it works, it's faster than using chromium each time
   //! mash the two queries above into 1 and loop
   //! get an array of our objects
-  const results = $('.result-title')
+  /*const results = $('.result-title')
     .map((index, element) => {
       const title = $(element).text()
       const url = $(element).attr('href')
       return { title, url }
+    })
+    .get()
+  */
+  // we'll base this off the parent so we can capture siblings to title
+  const results = $('.result-info')
+    .map((index, element) => {
+      const titleElement = $(element).find('.result-title')
+      const title = $(titleElement).text()
+      const url = $(titleElement).attr('href')
+
+      const timeElement = $(element).find('.result-date')
+      const datePosted = new Date($(timeElement).attr('datetime'))
+
+      const hoodElement = $(element).find('.result-hood')
+      const hood = $(hoodElement).text().trim().replace('(', '').replace(')', '')
+
+      return { title, url, datePosted, hood }
     })
     .get()
   //!^^^ make sure to use a .get() when you map over a cheerio w/ nodeJS --- then you'll get the actual values of the array!
