@@ -1,12 +1,12 @@
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 
-async function main() {
-  const browser = await puppeteer.launch({
-    headless: false
-  })
-  // open a new page/tab
-  const page = await browser.newPage()
+async function scrapeListings(page) {
+  // const browser = await puppeteer.launch({
+  //   headless: false
+  // })
+  // // open a new page/tab
+  // const page = await browser.newPage()
   await page.goto('https://fayar.craigslist.org/d/gigs/search/ggg')
   // get the page html
   const html = await page.content()
@@ -29,7 +29,7 @@ async function main() {
     .get()
   */
   // we'll base this off the parent so we can capture siblings to title
-  const results = $('.result-info')
+  const listings = $('.result-info')
     .map((index, element) => {
       const titleElement = $(element).find('.result-title')
       const title = $(titleElement).text()
@@ -45,8 +45,26 @@ async function main() {
     })
     .get()
   //!^^^ make sure to use a .get() when you map over a cheerio w/ nodeJS --- then you'll get the actual values of the array!
-  console.log(results)
+  // console.log(listings)
   // quick way to test is to copy and paste into the dev console
+  return listings // return the listings array
+}
+
+async function scrapeJobDescriptions(listings, page) {
+  for (let i = 0; i < listings.length; i++) {
+    await page.goto(listings[i].url)
+    const html = await page.content()
+  }
+}
+
+async function main() {
+  const browser = await puppeteer.launch({ headless: false })
+  // open a new page/tab
+  const page = await browser.newPage()
+  const listings = await scrapeListings(page)
+  console.log(listings)
+  // build a loop to go through all these different urls
+  const listingsWithJobDescriptions = await scrapeJobDescriptions(listings, page)
 }
 
 main()
