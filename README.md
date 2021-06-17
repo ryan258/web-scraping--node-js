@@ -23,3 +23,5 @@ we can...
 
 - .forEach() does not work well in puppeteer bc it does things kinda concurrently and in parallel
   - use a good ol for loop
+- a generic sleep function will allow request to slow down and not get the ip banned
+  - the sleep function can be used anywhere as long as you use async/await

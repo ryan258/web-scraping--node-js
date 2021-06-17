@@ -54,7 +54,16 @@ async function scrapeJobDescriptions(listings, page) {
   for (let i = 0; i < listings.length; i++) {
     await page.goto(listings[i].url)
     const html = await page.content()
+    await sleep(1605)
+    // or you could do it the other way
+    /*sleep(1000).then(()=>{
+      //scrape
+    })*/
   }
+}
+
+async function sleep(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds))
 }
 
 async function main() {
