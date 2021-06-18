@@ -2,6 +2,7 @@ require('dotenv').config()
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 const mongoose = require('mongoose')
+const Listing = require('./model/Listing')
 
 async function connectToMongoDB() {
   await mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@craigslistjobs.axqe7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -73,6 +74,9 @@ async function scrapeJobDescriptions(listings, page) {
     const compensation = $('p.attrgroup > span:nth-child(1) > b').text()
     listings[i].compensation = compensation
     console.log(listings[i].compensation)
+
+    const listingModel = new Listing(listings[i])
+    await listingModel.save()
 
     await sleep(1605)
   }
