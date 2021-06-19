@@ -1,0 +1,19 @@
+{
+  "name": "4-tdd-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "jest": "^27.0.4",
+    "promise": "^8.1.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}
